@@ -1,18 +1,25 @@
 'use strict';
 
-const CLOUD_WIDTH = 420;
-const CLOUD_HEIGHT = 270;
 const CLOUD_X = 100;
 const CLOUD_Y = 10;
+const CLOUD_WIDTH = 420;
+const CLOUD_HEIGHT = 270;
 const CLOUD_VERTICAL_PADDING = 14;
 const CLOUD_GAP = 10;
-const COLUMN_WIDTH = 40;
-const COLUMN_MAX_HEIGHT = 150;
-const COLUMN_GAP = 50;
-const COLUMN_VERTICAL_PADDING = 8;
+const CLOUD_COLOR_PRIMARY = '#fff';
+const CLOUD_COLOR_SECONDARY = 'rgba(0, 0, 0, 0.7)';
+const TEXT_CONTENT_VICTORY = 'Ура вы победили!';
+const TEXT_CONTENT_RESULTS = 'Список результатов:';
+const TEXT_COLOR = '#000';
 const TEXT_LEFT_PADDING = 36;
 const FONT_SIZE = 16;
 const LINE_HEIGHT = 18;
+const FONT = `${FONT_SIZE}px PT Mono`;
+const BASELINE = 'hanging';
+const COLUMN_WIDTH = 40;
+const COLUMN_MAX_HEIGHT = 150;
+const COLUMN_VERTICAL_PADDING = 8;
+const COLUMN_GAP = 50;
 
 function renderRect(ctx, x, y, width, height, color) {
   ctx.fillStyle = color;
@@ -20,36 +27,30 @@ function renderRect(ctx, x, y, width, height, color) {
 }
 
 function renderCloud(ctx) {
-  renderRect(ctx, CLOUD_X + CLOUD_GAP, CLOUD_Y + CLOUD_GAP, CLOUD_WIDTH, CLOUD_HEIGHT, 'rgba(0, 0, 0, 0.7)');
-  renderRect(ctx, CLOUD_X, CLOUD_Y, CLOUD_WIDTH, CLOUD_HEIGHT, '#fff');
+  renderRect(ctx, CLOUD_X + CLOUD_GAP, CLOUD_Y + CLOUD_GAP, CLOUD_WIDTH, CLOUD_HEIGHT, CLOUD_COLOR_SECONDARY);
+  renderRect(ctx, CLOUD_X, CLOUD_Y, CLOUD_WIDTH, CLOUD_HEIGHT, CLOUD_COLOR_PRIMARY);
 }
 
-function renderText(ctx, text, x, y) {
-  ctx.fillStyle = '#000';
-  ctx.textBaseline = 'hanging';
-  ctx.font = `${FONT_SIZE}px PT Mono`;
-  ctx.fillText(text, x, y);
+function renderText(ctx, content, x, y) {
+  ctx.fillStyle = TEXT_COLOR;
+  ctx.fillText(content, x, y);
 }
 
 function renderResultText(ctx) {
-  renderText(ctx, 'Ура вы победили!', CLOUD_X + TEXT_LEFT_PADDING, CLOUD_Y + CLOUD_VERTICAL_PADDING);
-  renderText(ctx, 'Список результатов:', CLOUD_X + TEXT_LEFT_PADDING, CLOUD_Y + CLOUD_VERTICAL_PADDING + LINE_HEIGHT);
+  renderText(ctx, TEXT_CONTENT_VICTORY, CLOUD_X + TEXT_LEFT_PADDING, CLOUD_Y + CLOUD_VERTICAL_PADDING);
+  renderText(ctx, TEXT_CONTENT_RESULTS, CLOUD_X + TEXT_LEFT_PADDING, CLOUD_Y + CLOUD_VERTICAL_PADDING + LINE_HEIGHT);
 }
 
 function getMaxElement(arr) {
-  let maxElement = Math.max(...arr);
-  return maxElement;
+  return Math.max(...arr);
 }
 
 function getColumnHeight(playerTime, times) {
-  const maxTime = getMaxElement(times);
-  const columnHeight = COLUMN_MAX_HEIGHT * playerTime / maxTime;
-  return columnHeight;
+  return COLUMN_MAX_HEIGHT * playerTime / getMaxElement(times);
 }
 
 function getRandomSaturation() {
-  let saturation = Math.floor(Math.random() * 101);
-  return saturation;
+  return Math.floor(Math.random() * 101);
 }
 
 function getColumnColor(player) {
@@ -63,6 +64,8 @@ function getColumnColor(player) {
 window.renderStatistics = function (ctx, players, times) {
   const sidePadding = (CLOUD_WIDTH - players.length * COLUMN_WIDTH - (players.length - 1) * COLUMN_GAP) / 2;
 
+  ctx.textBaseline = BASELINE;
+  ctx.font = FONT;
   renderCloud(ctx);
   renderResultText(ctx);
 
