@@ -1,30 +1,34 @@
 'use strict';
 
-const SETUP = document.querySelector('.setup');
-const SETUP_SIMILAR = document.querySelector('.setup-similar');
+const NUMBER_OF_WIZARDS = 4;
 const NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
 const SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 const COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 const EYES_COLORS = ['black', 'red', 'blue', 'yellow', 'green'];
+
+const setup = document.querySelector('.setup');
+const setupSimilar = document.querySelector('.setup-similar');
 const wizards = [];
-const similarListElement = SETUP.querySelector('.setup-similar-list');
+const similarListElement = setup.querySelector('.setup-similar-list');
 const similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-SETUP.classList.remove('hidden');
+setup.classList.remove('hidden');
 
 function getRandomElement(arr) {
-  const randomElement = Math.floor(Math.random() * arr.length);
-  return arr[randomElement];
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function getRandomWizard() {
+  return {
+    name: `${getRandomElement(NAMES)} ${getRandomElement(SURNAMES)}`,
+    coatColor: getRandomElement(COAT_COLORS),
+    eyesColor: getRandomElement(EYES_COLORS)
+  };
 }
 
 function getWizardsList() {
-  for (let i = 0; i < 4; i++) {
-    const wizard = {
-      name: `${getRandomElement(NAMES)} ${getRandomElement(SURNAMES)}`,
-      coatColor: getRandomElement(COAT_COLORS),
-      eyesColor: getRandomElement(EYES_COLORS)
-    };
-    wizards.push(wizard);
+  for (let i = 0; i < NUMBER_OF_WIZARDS; i++) {
+    wizards.push(getRandomWizard());
   }
   return wizards;
 }
@@ -51,4 +55,4 @@ function getContent(render, arr) {
 
 getContent(renderWizard, wizards);
 
-SETUP_SIMILAR.classList.remove('hidden');
+setupSimilar.classList.remove('hidden');
