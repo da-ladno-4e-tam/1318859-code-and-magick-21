@@ -14,13 +14,13 @@
 
   function getRandomWizard() {
     return {
-      name: `${window.getRandomElement(NAMES)} ${window.getRandomElement(SURNAMES)}`,
-      coatColor: window.getRandomElement(window.COAT_COLORS),
-      eyesColor: window.getRandomElement(window.EYES_COLORS)
+      name: `${window.utils.getRandomElement(NAMES)} ${window.utils.getRandomElement(SURNAMES)}`,
+      coatColor: window.utils.getRandomElement(window.COAT_COLORS),
+      eyesColor: window.utils.getRandomElement(window.EYES_COLORS)
     };
   }
 
-  window.getElementsList(NUMBER_OF_WIZARDS, wizards, getRandomWizard);
+  window.utils.getElementsList(NUMBER_OF_WIZARDS, wizards, getRandomWizard);
 
   function renderWizard(wizard) {
     const wizardElement = similarWizardTemplate.cloneNode(true);
@@ -31,5 +31,5 @@
     return wizardElement;
   }
 
-  window.getContent(renderWizard, wizards, similarListElement);
+  window.utils.getContent(renderWizard, wizards, similarListElement);
 })();

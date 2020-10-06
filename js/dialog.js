@@ -22,7 +22,7 @@
 
   function onPopupEscPress(evt) {
     if (setupUserName !== document.activeElement) {
-      window.util.isEscapeEvent(evt, closePopup);
+      window.utils.isEscapeEvent(evt, closePopup);
     }
   }
 
@@ -45,12 +45,12 @@
     openPopup();
   });
   setupOpen.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, openPopup);
+    window.utils.isEnterEvent(evt, openPopup);
   });
   setupClose.addEventListener('click', function () {
     closePopup();
   });
   setupClose.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, closePopup);
+    window.utils.isEnterEvent(evt, closePopup);
   });
 })();
