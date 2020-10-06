@@ -37,6 +37,7 @@
 
   function closePopup() {
     window.setup.classList.add('hidden');
+    window.setup.removeAttribute('style');
     document.removeEventListener('keydown', onPopupEscPress);
   }
 
