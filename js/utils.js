@@ -8,10 +8,15 @@
     getRandomElement: function (arr) {
       return arr[Math.floor(Math.random() * arr.length)];
     },
-    getContent: function (render, arr, container) {
+    getRandomContent: function (render, arr, quantity, container) {
       const fragment = document.createDocumentFragment();
-      for (let i = 0; i < arr.length; i++) {
-        fragment.appendChild(render(arr[i]));
+      const usedNumbers = [];
+      while (usedNumbers.length < quantity) {
+        const usedNumber = window.utils.getRandomElement(arr);
+        if (!usedNumbers.includes(usedNumber)) {
+          fragment.appendChild(render(usedNumber));
+          usedNumbers.push(usedNumber);
+        }
       }
       container.appendChild(fragment);
     },
